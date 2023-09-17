@@ -50,6 +50,9 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.7.5")
 
+    // https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter
+    implementation("io.springfox:springfox-boot-starter:3.0.0")
+
 
 }
 
