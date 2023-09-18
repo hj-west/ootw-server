@@ -60,3 +60,5 @@ spring:
     username: admin
     password: guswl9814
 
+jwt:
+  secret: djkskwosn@sjdkd!)@*$ksmdlllsoiehdhuw*@(#&!sjkdnallkxjksei!@@*#*@#@&sjklaln
