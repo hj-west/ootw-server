@@ -34,6 +34,11 @@ spring:
 jwt:
   secret: djkskwosn@sjdkd!)@*$ksmdlllsoiehdhuw*@(#&!sjkdnallkxjksei!@@*#*@#@&sjklaln
 
+openweather:
+  host: https://api.openweathermap.org/data/2.5/weather
+  apikey: 3ab9e45e7483aff5ae45a7f6c3f22a92
+
+
 ---
 server:
   port: 5959
@@ -65,3 +70,7 @@ spring:
 
 jwt:
   secret: djkskwosn@sjdkd!)@*$ksmdlllsoiehdhuw*@(#&!sjkdnallkxjksei!@@*#*@#@&sjklaln
+
+openweather:
+  host: https://api.openweathermap.org/data/2.5/weather
+  apikey: 3ab9e45e7483aff5ae45a7f6c3f22a92
