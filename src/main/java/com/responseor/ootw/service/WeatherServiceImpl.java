@@ -1,5 +1,6 @@
 package com.responseor.ootw.service;
 
+import com.responseor.ootw.dto.WeatherApiResponseDto;
 import com.responseor.ootw.dto.WeatherResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URLEncoder;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -33,12 +35,25 @@ public class WeatherServiceImpl implements WeatherService {
 
             RestTemplate restTemplate = new RestTemplate();
 
-            return restTemplate.getForObject(urlBuilder.toString(), WeatherResponseDto.class);
+            WeatherApiResponseDto apiResponse =restTemplate.getForObject(urlBuilder.toString(), WeatherApiResponseDto.class);
 
+            return WeatherResponseDto.builder()
+                    .id(Objects.requireNonNull(apiResponse).getWeather().get(0).getId())
+                    .main(Objects.requireNonNull(apiResponse).getWeather().get(0).getMain())
+                    .icon(Objects.requireNonNull(apiResponse).getWeather().get(0).getIcon())
+                    .temp(apiResponse.getMain().getTemp())
+                    .feelsTemp(apiResponse.getMain().getFeels_like())
+                    .minTemp(apiResponse.getMain().getTemp_min())
+                    .maxTemp(apiResponse.getMain().getTemp_max())
+                    .humidity(apiResponse.getMain().getHumidity())
+                    .windSpeed(apiResponse.getWind().getSpeed())
+                    .cloudsAll(apiResponse.getClouds().getAll())
+                    .sunrise(apiResponse.getSys().getSunrise())
+                    .sunset(apiResponse.getSys().getSunset())
+                    .build();
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
+            throw new RuntimeException("Weather Api Error");
         }
     }
 }
