@@ -6,12 +6,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 @Setter
 @Getter
@@ -123,7 +120,7 @@ public class WeatherApiResponseDto {
         private String convertTimestampToString(Long timestamp) {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = new Date();
-            date.setTime(timestamp*1000);
+            date.setTime(timestamp * 1000);
 
             return format.format(date);
         }
