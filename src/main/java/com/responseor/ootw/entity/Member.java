@@ -12,36 +12,37 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "ootw_member")
+@Table(name = "OOTW_MEMBER")
 public class Member extends BaseEntity{
      /**
       * UUID : UUID
       */
      @Id
-     @Column(name = "uuid")
+     @Column(name = "UUID")
      @GeneratedValue(strategy = GenerationType.IDENTITY)
      private Long uuid;
 
      /**
       * EMAIL : 이메일
       */
-     @Column(name = "email", length = 45, unique = true)
+     @Column(name = "EMAIL", length = 45, unique = true)
      private String email;
 
      /**
       * PASSWORD : 비밀번호
       */
-     @Column(name = "password", length = 100)
+     @Column(name = "PASSWORD", length = 100)
      private String password;
 
 
      /**
       * TEL_NO : 전화번호
       */
-     @Column(name = "tel_no", length = 50)
+     @Column(name = "TEL_NO", length = 50)
      private String telNo;
 
 
+     @Column(name = "ROLE")
      @Enumerated(EnumType.STRING)
      private Role role;
 
