@@ -27,11 +27,14 @@ public class MemberServiceImpl implements MemberService {
         if (memberRepository.findByEmail(memberJoinRequestDto.getEmail()).isPresent()) {
             throw new RuntimeException("이미 존재하는 이메일입니다.");
         }
+        List<String> roles = new ArrayList<>();
+        roles.add(Role.USER.role());
+
         Member member = memberRepository.save(Member.builder()
                         .email(memberJoinRequestDto.getEmail())
                         .password(passwordEncoder.encode(memberJoinRequestDto.getPassword()))
                         .telNo(memberJoinRequestDto.getTelNo())
-                .role(Role.USER)
+                .roles(roles)
                 .build());
 
         return member.getUuid();
@@ -46,8 +49,7 @@ public class MemberServiceImpl implements MemberService {
             throw new IllegalArgumentException("잘못된 비밀번호입니다.");
         }
 
-        List<String> roles = new ArrayList<>();
-        roles.add(member.getRole().name());
+        List<String> roles = member.getRoles();
 
         return jwtTokenProvider.generateToken(member.getUuid(), roles);
 

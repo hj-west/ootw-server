@@ -1,5 +1,7 @@
 package com.responseor.ootw.service;
 
+import com.responseor.ootw.dto.CustomUserDetails;
+import com.responseor.ootw.entity.Member;
 import com.responseor.ootw.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +18,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return (UserDetails) memberRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("가입되지 않은 회원입니다."));
+        Member member = memberRepository.findByUuid(Long.valueOf(username)).orElseThrow(() -> new UsernameNotFoundException("가입되지 않은 회원입니다."));
+
+        return new CustomUserDetails(member);
     }
 }
