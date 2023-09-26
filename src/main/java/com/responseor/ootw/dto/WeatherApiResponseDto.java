@@ -110,23 +110,23 @@ public class WeatherApiResponseDto {
         private long sunrise;
 
         public String getSunrise() {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date date = new Date();
-            date.setTime(sunrise*1000);
-
-            return format.format(date);
+            return convertTimestampToString(sunrise);
         }
 
         @ApiModelProperty(example = "일몰 시간, 유닉스, UTC")
         private long sunset;
 
         public String getSunset() {
+            return convertTimestampToString(sunset);
+        }
+
+        private String convertTimestampToString(Long timestamp) {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = new Date();
-            date.setTime(sunset*1000);
+            date.setTime(timestamp*1000);
 
             return format.format(date);
         }
-
     }
+
 }
