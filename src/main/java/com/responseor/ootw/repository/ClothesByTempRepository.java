@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ClothesByTempRepository extends JpaRepository<ClothesByTemp, Integer> {
+    List<ClothesByTemp> findAllByUuid(Long uuid);
     @Query(value = "select c from ClothesByTemp c where c.uuid = :uuid and :temp between c.startTemp and c.endTemp")
     List<ClothesByTemp> findByUuidAndStartTempLessThanEqualOrEndTempGreaterThanEqual(@Param("uuid") Long uuid, @Param("temp") Integer temp);
-
     @Query(value = "select c from ClothesByTemp c where c.uuid is null and :temp between c.startTemp and c.endTemp")
     List<ClothesByTemp> findByUuidIsNullAndStartTempLessThanEqualOrEndTempGreaterThanEqual(@Param("temp") Integer temp);
 
