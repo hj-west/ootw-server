@@ -11,7 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "OOTW_CLOTHES_BY_TEMPERATURE")
-public class ClotheByTemp extends BaseEntity{
+public class ClothesByTemp extends BaseEntity{
     /**
      * ID : ID
      */
