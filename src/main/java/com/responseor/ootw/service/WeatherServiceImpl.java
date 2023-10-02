@@ -1,14 +1,19 @@
 package com.responseor.ootw.service;
 
+import com.responseor.ootw.dto.CustomUserDetails;
 import com.responseor.ootw.dto.WeatherApiResponseDto;
 import com.responseor.ootw.dto.WeatherResponseDto;
+import com.responseor.ootw.entity.ClothesByTemp;
+import com.responseor.ootw.repository.ClothesByTempRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -21,6 +26,8 @@ public class WeatherServiceImpl implements WeatherService {
 
     @Value("${openweather.apikey}")
     private String apiKey;
+
+    private final ClothesByTempRepository clothesByTempRepository;
 
     @Override
     public WeatherResponseDto getWeather(String lat, String lon) {
@@ -55,6 +62,20 @@ public class WeatherServiceImpl implements WeatherService {
         } catch (Exception e) {
             throw new RuntimeException("Weather Api Error");
         }
+    }
+
+    @Override
+    public List<ClothesByTemp> getClothes(int temp) {
+
+        Long uuid = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUuid();
+
+        List<ClothesByTemp> clothesByTempList = clothesByTempRepository.findByUuidAndStartTempLessThanEqualOrEndTempGreaterThanEqual(uuid, temp);
+
+        if (clothesByTempList.isEmpty()) {
+            clothesByTempList = clothesByTempRepository.findByUuidIsNullAndStartTempLessThanEqualOrEndTempGreaterThanEqual(temp);
+        }
+
+        return clothesByTempList;
     }
 }
 
