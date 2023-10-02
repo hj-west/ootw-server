@@ -1,7 +1,7 @@
 package com.responseor.ootw.controller;
 
 import com.responseor.ootw.dto.MemberLoginRequestDto;
-import com.responseor.ootw.service.MemberService;
+import com.responseor.ootw.service.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RequestMapping("/auth")
 public class AuthController {
-    private final MemberService memberService;
-
+    private final AuthService authService;
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody MemberLoginRequestDto loginDto) {
-        String token = memberService.login(loginDto.getEmail(), loginDto.getPassword());
+        String token = authService.login(loginDto.getEmail(), loginDto.getPassword());
 
         return ResponseEntity.ok().body(token);
     }

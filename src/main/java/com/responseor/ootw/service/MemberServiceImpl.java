@@ -20,7 +20,6 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class MemberServiceImpl implements MemberService {
     private final BCryptPasswordEncoder passwordEncoder;
-    private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
     private final ClothesByTempRepository clothesByTempRepository;
 
@@ -41,21 +40,6 @@ public class MemberServiceImpl implements MemberService {
                 .build());
 
         return member.getUuid();
-    }
-
-    @Override
-    public String login(String email, String password) {
-        Member member = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 회원입니다."));
-
-        if (!passwordEncoder.matches(password, member.getPassword())) {
-            throw new IllegalArgumentException("잘못된 비밀번호입니다.");
-        }
-
-        List<String> roles = member.getRoles();
-
-        return jwtTokenProvider.generateToken(member.getUuid(), roles);
-
     }
 
     @Override
