@@ -31,6 +31,7 @@ public class WebSecurityConfig {
                 .httpBasic().disable()
                 .authorizeRequests()
                 .antMatchers("/weathers**").authenticated()
+                .antMatchers("/weathers/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
