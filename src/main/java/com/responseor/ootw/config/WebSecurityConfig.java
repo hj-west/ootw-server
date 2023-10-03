@@ -37,6 +37,7 @@ public class WebSecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/weathers**").authenticated()
                 .antMatchers("/weathers/**").authenticated()
+                .antMatchers("/members").permitAll()
                 .antMatchers("/members/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
