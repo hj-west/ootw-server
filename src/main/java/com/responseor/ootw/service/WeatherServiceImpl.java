@@ -4,6 +4,8 @@ import com.responseor.ootw.dto.CustomUserDetails;
 import com.responseor.ootw.dto.WeatherApiResponseDto;
 import com.responseor.ootw.dto.WeatherResponseDto;
 import com.responseor.ootw.entity.ClothesByTemp;
+import com.responseor.ootw.exception.CustomException;
+import com.responseor.ootw.exception.ErrorCode;
 import com.responseor.ootw.repository.ClothesByTempRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -60,7 +62,7 @@ public class WeatherServiceImpl implements WeatherService {
                     .build();
 
         } catch (Exception e) {
-            throw new RuntimeException("Weather Api Error");
+            throw new CustomException(ErrorCode.WEATHER_API_ERROR);
         }
     }
 
