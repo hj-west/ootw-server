@@ -20,7 +20,7 @@ public class WeatherController {
 
     @GetMapping("")
     private ResponseEntity<WeatherResponseDto> getWeather(@RequestParam("lat") String lat, @RequestParam("lon") String lon) {
-        return ResponseEntity.ok().body(weatherService.getWeather("37.4591444444444", "127.053411111111"));
+        return ResponseEntity.ok().body(weatherService.getWeather(lat, lon));
     }
 
     @GetMapping("/clothes")
