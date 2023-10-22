@@ -4,10 +4,11 @@ import com.responseor.ootw.dto.MemberJoinRequestDto;
 import com.responseor.ootw.entity.ClothesByTemp;
 import com.responseor.ootw.entity.Member;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface MemberService {
     Long join(MemberJoinRequestDto memberJoinRequestDto);
-    Member getMemberInfo(Long uuid);
-    List<ClothesByTemp> getMemberClothes(Long uuid);
+    Member getMemberInfo(HttpServletRequest request);
+    List<ClothesByTemp> getMemberClothes(HttpServletRequest request);
 }

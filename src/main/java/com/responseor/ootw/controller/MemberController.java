@@ -7,9 +7,9 @@ import com.responseor.ootw.entity.Member;
 import com.responseor.ootw.service.MemberService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -24,13 +24,13 @@ public class MemberController {
         return ResponseEntity.ok().body(memberService.join(memberJoinRequestDto));
     }
 
-    @GetMapping("/{uuid}")
-    public ResponseEntity<Member> memberInfo(@PathVariable("uuid") Long uuid) {
-        return ResponseEntity.ok().body(memberService.getMemberInfo(uuid));
+    @GetMapping("/my-info")
+    public ResponseEntity<Member> memberInfo(HttpServletRequest request) {
+        return ResponseEntity.ok().body(memberService.getMemberInfo(request));
     }
 
-    @GetMapping("/{uuid}/clothes")
-    public ResponseEntity<List<ClothesByTemp>> memberClothes(@PathVariable("uuid") Long uuid) {
-        return ResponseEntity.ok().body(memberService.getMemberClothes(uuid));
+    @GetMapping("/my-clothes")
+    public ResponseEntity<List<ClothesByTemp>> memberClothes(HttpServletRequest request) {
+        return ResponseEntity.ok().body(memberService.getMemberClothes(request));
     }
 }

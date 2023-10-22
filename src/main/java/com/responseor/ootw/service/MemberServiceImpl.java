@@ -1,5 +1,6 @@
 package com.responseor.ootw.service;
 
+import com.responseor.ootw.config.jwt.JwtTokenProvider;
 import com.responseor.ootw.dto.MemberJoinRequestDto;
 import com.responseor.ootw.dto.Role;
 import com.responseor.ootw.entity.ClothesByTemp;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class MemberServiceImpl implements MemberService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
     private final ClothesByTempRepository clothesByTempRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
     @Override
@@ -44,12 +47,18 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member getMemberInfo(Long uuid) {
-        return memberRepository.findByUuid(uuid).orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
+    public Member getMemberInfo(HttpServletRequest request) {
+        String token = jwtTokenProvider.resolveToken(request);
+        Long uuid = Long.valueOf(jwtTokenProvider.getUserPk(token));
+
+        return memberRepository.findByUuid(uuid).orElseThrow(() -> new CustomException(ErrorCode.INCORRECT_MEMBER_INFORMATION));
     }
 
     @Override
-    public List<ClothesByTemp> getMemberClothes(Long uuid) {
+    public List<ClothesByTemp> getMemberClothes(HttpServletRequest request) {
+        String token = jwtTokenProvider.resolveToken(request);
+        Long uuid = Long.valueOf(jwtTokenProvider.getUserPk(token));
+
         return clothesByTempRepository.findAllByUuid(uuid);
     }
 }
