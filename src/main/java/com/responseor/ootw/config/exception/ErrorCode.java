@@ -1,4 +1,4 @@
-package com.responseor.ootw.exception;
+package com.responseor.ootw.config.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
