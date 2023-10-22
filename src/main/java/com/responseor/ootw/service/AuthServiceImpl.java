@@ -2,8 +2,8 @@ package com.responseor.ootw.service;
 
 import com.responseor.ootw.config.jwt.JwtTokenProvider;
 import com.responseor.ootw.entity.Member;
-import com.responseor.ootw.exception.CustomException;
-import com.responseor.ootw.exception.ErrorCode;
+import com.responseor.ootw.config.exception.CustomException;
+import com.responseor.ootw.config.exception.ErrorCode;
 import com.responseor.ootw.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
