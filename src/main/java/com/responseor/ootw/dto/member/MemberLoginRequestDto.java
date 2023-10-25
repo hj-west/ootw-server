@@ -1,4 +1,4 @@
-package com.responseor.ootw.dto;
+package com.responseor.ootw.dto.member;
 
 import lombok.Getter;
 import lombok.Setter;

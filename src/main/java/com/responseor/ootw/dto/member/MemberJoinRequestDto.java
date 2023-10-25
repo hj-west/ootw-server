@@ -1,5 +1,6 @@
-package com.responseor.ootw.dto;
+package com.responseor.ootw.dto.member;
 
+import com.responseor.ootw.dto.Role;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
