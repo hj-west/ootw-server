@@ -1,7 +1,6 @@
 package com.responseor.ootw.controller;
 
-import com.responseor.ootw.dto.CustomUserDetails;
-import com.responseor.ootw.dto.MemberJoinRequestDto;
+import com.responseor.ootw.dto.member.MemberJoinRequestDto;
 import com.responseor.ootw.entity.ClothesByTemp;
 import com.responseor.ootw.entity.Member;
 import com.responseor.ootw.service.MemberService;
@@ -26,6 +25,11 @@ public class MemberController {
 
     @GetMapping("/my-info")
     public ResponseEntity<Member> memberInfo(HttpServletRequest request) {
+        return ResponseEntity.ok().body(memberService.getMemberInfo(request));
+    }
+
+    @PostMapping("/my-info")
+    public ResponseEntity<Member> memberInfoUpdate(HttpServletRequest request) {
         return ResponseEntity.ok().body(memberService.getMemberInfo(request));
     }
 

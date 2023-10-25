@@ -1,6 +1,6 @@
 package com.responseor.ootw.service;
 
-import com.responseor.ootw.dto.MemberJoinRequestDto;
+import com.responseor.ootw.dto.member.MemberJoinRequestDto;
 import com.responseor.ootw.entity.ClothesByTemp;
 import com.responseor.ootw.entity.Member;
 

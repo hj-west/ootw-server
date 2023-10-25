@@ -1,6 +1,6 @@
 package com.responseor.ootw.controller;
 
-import com.responseor.ootw.dto.MemberLoginRequestDto;
+import com.responseor.ootw.dto.member.MemberLoginRequestDto;
 import com.responseor.ootw.service.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
