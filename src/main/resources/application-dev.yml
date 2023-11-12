@@ -1,0 +1,33 @@
+server:
+  port: ${port}
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: never
+
+spring:
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    generate-ddl: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  datasource:
+    url: jdbc:mariadb://${DB_url}:${DB_port}/${DB_dataBaseName}?characterEncoding=UTF-8&serverTimezone=UTC
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: ${DB_name}
+    password: ${DB_password}
+
+jwt:
+  secret: djkskwosn@sjdkd!)@*$ksmdlllsoiehdhuw*@(#&!sjkdnallkxjksei!@@*#*@#@&sjklaln
+
+openweather:
+  host: https://api.openweathermap.org/data/2.5/weather
+  apikey: 3ab9e45e7483aff5ae45a7f6c3f22a92
