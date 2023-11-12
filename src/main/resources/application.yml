@@ -26,10 +26,10 @@ spring:
       matching-strategy: ant_path_matcher
 
   datasource:
-    url: jdbc:mariadb://daybook-rds.cjhfreaotcgg.ap-northeast-2.rds.amazonaws.com:3306/daybook
+    url: jdbc:mariadb://${DB_url}:${DB_port}/{DB_dataBaseName}?characterEncoding=UTF-8&serverTimezone=UTC
     driver-class-name: org.mariadb.jdbc.Driver
-    username: admin
-    password: guswl9814
+    username: ${DB_name}
+    password: ${DB_password}
 
 jwt:
   secret: djkskwosn@sjdkd!)@*$ksmdlllsoiehdhuw*@(#&!sjkdnallkxjksei!@@*#*@#@&sjklaln
@@ -63,10 +63,10 @@ spring:
       matching-strategy: ant_path_matcher
 
   datasource:
-    url: jdbc:mariadb://daybook-rds.cjhfreaotcgg.ap-northeast-2.rds.amazonaws.com:3306/daybook
+    url: jdbc:mariadb://${DB_url}:${DB_port}/{DB_dataBaseName}?characterEncoding=UTF-8&serverTimezone=UTC
     driver-class-name: org.mariadb.jdbc.Driver
-    username: admin
-    password: guswl9814
+    username: ${DB_name}
+    password: ${DB_password}
 
 jwt:
   secret: djkskwosn@sjdkd!)@*$ksmdlllsoiehdhuw*@(#&!sjkdnallkxjksei!@@*#*@#@&sjklaln
