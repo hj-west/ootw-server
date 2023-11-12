@@ -18,7 +18,7 @@ spring:
         format_sql: true
         show_sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     open-in-view: false
     generate-ddl: true
   mvc:
@@ -26,10 +26,10 @@ spring:
       matching-strategy: ant_path_matcher
 
   datasource:
-    url: jdbc:mariadb://${DB_url}:${DB_port}/{DB_dataBaseName}?characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mariadb://svc.sel5.cloudtype.app:30000/ootw?characterEncoding=UTF-8&serverTimezone=UTC
     driver-class-name: org.mariadb.jdbc.Driver
-    username: ${DB_name}
-    password: ${DB_password}
+    username: root
+    password: guswl9814
 
 jwt:
   secret: djkskwosn@sjdkd!)@*$ksmdlllsoiehdhuw*@(#&!sjkdnallkxjksei!@@*#*@#@&sjklaln
@@ -41,7 +41,7 @@ openweather:
 
 ---
 server:
-  port: 5959
+  port: ${port}
   error:
     include-message: always
     include-binding-errors: always
