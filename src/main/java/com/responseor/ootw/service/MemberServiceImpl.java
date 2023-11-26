@@ -4,6 +4,7 @@ import com.responseor.ootw.config.exception.CustomException;
 import com.responseor.ootw.config.exception.ErrorCode;
 import com.responseor.ootw.config.jwt.JwtTokenProvider;
 import com.responseor.ootw.dto.Role;
+import com.responseor.ootw.dto.member.MemberClotheRequestDto;
 import com.responseor.ootw.dto.member.MemberJoinRequestDto;
 import com.responseor.ootw.entity.ClothesByTemp;
 import com.responseor.ootw.entity.Member;
@@ -60,5 +61,19 @@ public class MemberServiceImpl implements MemberService {
         Long uuid = Long.valueOf(jwtTokenProvider.getUserPk(token));
 
         return clothesByTempRepository.findAllByUuid(uuid);
+    }
+
+    @Override
+    public void addMemberClothes(Long uuid, List<MemberClotheRequestDto> memberClotheRequestDtoList) {
+        for (MemberClotheRequestDto memberClotheRequestDto : memberClotheRequestDtoList) {
+            ClothesByTemp clothesByTemp = ClothesByTemp.builder()
+                    .clothes(memberClotheRequestDto.getClothes())
+                    .startTemp(memberClotheRequestDto.getStartTemp())
+                    .endTemp(memberClotheRequestDto.getEndTemp())
+                    .uuid(uuid)
+                    .build();
+
+            clothesByTempRepository.save(clothesByTemp);
+        }
     }
 }
