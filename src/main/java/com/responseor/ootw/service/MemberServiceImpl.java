@@ -58,6 +58,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public void updateMemberInfo(Long uuid, MemberUpdateRequestDto memberUpdateRequestDto) {
         Member member = memberRepository.findByUuid(uuid).orElseThrow(() -> new CustomException(ErrorCode.INCORRECT_MEMBER_INFORMATION));
 
@@ -66,6 +67,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public void updateMemberPassword(Long uuid, MemberPasswordUpdateRequestDto memberPasswordUpdateRequestDto) {
         Member member = memberRepository.findByUuid(uuid).orElseThrow(() -> new CustomException(ErrorCode.INCORRECT_MEMBER_INFORMATION));
 
@@ -100,6 +102,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public void deleteMemberClothes(int id) {
         ClothesByTemp clothesByTemp = clothesByTempRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_CLOTHES));
 
