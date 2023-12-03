@@ -57,4 +57,11 @@ public class MemberController {
 
         return ResponseEntity.ok(null);
     }
+
+    @GetMapping("/my-clothes/{id}/delete")
+    public ResponseEntity<?> deleteMemberClothes(@PathVariable("id") Long id) {
+        memberService.deleteMemberClothes(id);
+
+        return ResponseEntity.ok(null);
+    }
 }
