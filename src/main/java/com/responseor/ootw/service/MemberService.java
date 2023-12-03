@@ -2,6 +2,7 @@ package com.responseor.ootw.service;
 
 import com.responseor.ootw.dto.member.MemberClotheRequestDto;
 import com.responseor.ootw.dto.member.MemberJoinRequestDto;
+import com.responseor.ootw.dto.member.MemberPasswordUpdateRequestDto;
 import com.responseor.ootw.dto.member.MemberUpdateRequestDto;
 import com.responseor.ootw.entity.ClothesByTemp;
 import com.responseor.ootw.entity.Member;
@@ -13,6 +14,8 @@ public interface MemberService {
     Long join(MemberJoinRequestDto memberJoinRequestDto);
     Member getMemberInfo(HttpServletRequest request);
     void updateMemberInfo(Long uuid, MemberUpdateRequestDto memberUpdateRequestDto);
+    void updateMemberPassword(Long uuid, MemberPasswordUpdateRequestDto memberPasswordUpdateRequestDto);
+
     List<ClothesByTemp> getMemberClothes(HttpServletRequest request);
     void addMemberClothes(Long uuid, List<MemberClotheRequestDto> memberClotheRequestDtoList);
     void deleteMemberClothes(Long id);

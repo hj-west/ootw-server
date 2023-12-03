@@ -6,6 +6,7 @@ import com.responseor.ootw.config.jwt.JwtTokenProvider;
 import com.responseor.ootw.dto.Role;
 import com.responseor.ootw.dto.member.MemberClotheRequestDto;
 import com.responseor.ootw.dto.member.MemberJoinRequestDto;
+import com.responseor.ootw.dto.member.MemberPasswordUpdateRequestDto;
 import com.responseor.ootw.dto.member.MemberUpdateRequestDto;
 import com.responseor.ootw.entity.ClothesByTemp;
 import com.responseor.ootw.entity.Member;
@@ -62,6 +63,18 @@ public class MemberServiceImpl implements MemberService {
 
         member.setTelNo(memberUpdateRequestDto.getTelNo());
         memberRepository.save(member);
+    }
+
+    @Override
+    public void updateMemberPassword(Long uuid, MemberPasswordUpdateRequestDto memberPasswordUpdateRequestDto) {
+        Member member = memberRepository.findByUuid(uuid).orElseThrow(() -> new CustomException(ErrorCode.INCORRECT_MEMBER_INFORMATION));
+
+        if (memberPasswordUpdateRequestDto.getNewPassword().equals(memberPasswordUpdateRequestDto.getConfirmPassword())) {
+            member.setPassword(memberPasswordUpdateRequestDto.getNewPassword());
+
+            memberRepository.save(member);
+        }
+
     }
 
     @Override
