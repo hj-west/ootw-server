@@ -6,6 +6,7 @@ import com.responseor.ootw.config.jwt.JwtTokenProvider;
 import com.responseor.ootw.dto.Role;
 import com.responseor.ootw.dto.member.MemberClotheRequestDto;
 import com.responseor.ootw.dto.member.MemberJoinRequestDto;
+import com.responseor.ootw.dto.member.MemberUpdateRequestDto;
 import com.responseor.ootw.entity.ClothesByTemp;
 import com.responseor.ootw.entity.Member;
 import com.responseor.ootw.repository.ClothesByTempRepository;
@@ -53,6 +54,14 @@ public class MemberServiceImpl implements MemberService {
         Long uuid = Long.valueOf(jwtTokenProvider.getUserPk(token));
 
         return memberRepository.findByUuid(uuid).orElseThrow(() -> new CustomException(ErrorCode.INCORRECT_MEMBER_INFORMATION));
+    }
+
+    @Override
+    public void updateMemberInfo(Long uuid, MemberUpdateRequestDto memberUpdateRequestDto) {
+        Member member = memberRepository.findByUuid(uuid).orElseThrow(() -> new CustomException(ErrorCode.INCORRECT_MEMBER_INFORMATION));
+
+        member.setTelNo(memberUpdateRequestDto.getTelNo());
+        memberRepository.save(member);
     }
 
     @Override
