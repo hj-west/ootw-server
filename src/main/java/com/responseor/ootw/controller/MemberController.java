@@ -3,6 +3,7 @@ package com.responseor.ootw.controller;
 import com.responseor.ootw.config.jwt.JwtTokenProvider;
 import com.responseor.ootw.dto.member.MemberClotheRequestDto;
 import com.responseor.ootw.dto.member.MemberJoinRequestDto;
+import com.responseor.ootw.dto.member.MemberPasswordUpdateRequestDto;
 import com.responseor.ootw.dto.member.MemberUpdateRequestDto;
 import com.responseor.ootw.entity.ClothesByTemp;
 import com.responseor.ootw.entity.Member;
@@ -40,6 +41,17 @@ public class MemberController {
 
         memberService.updateMemberInfo(uuid, memberUpdateRequestDto);
         return ResponseEntity.ok().body(null);
+    }
+
+    @PostMapping("/my-info/password-update")
+    public ResponseEntity<?> updateMemberPassword(HttpServletRequest request
+    , @RequestBody MemberPasswordUpdateRequestDto memberPasswordUpdateRequestDto) {
+        String token = jwtTokenProvider.resolveToken(request);
+        Long uuid = Long.valueOf(jwtTokenProvider.getUserPk(token));
+
+        memberService.updateMemberPassword(uuid, memberPasswordUpdateRequestDto);
+
+        return ResponseEntity.ok(null);
     }
 
     @GetMapping("/my-clothes")
