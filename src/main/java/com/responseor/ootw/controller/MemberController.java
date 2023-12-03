@@ -71,7 +71,7 @@ public class MemberController {
     }
 
     @GetMapping("/my-clothes/{id}/delete")
-    public ResponseEntity<?> deleteMemberClothes(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteMemberClothes(@PathVariable("id") int id) {
         memberService.deleteMemberClothes(id);
 
         return ResponseEntity.ok(null);
