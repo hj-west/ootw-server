@@ -85,4 +85,11 @@ public class MemberServiceImpl implements MemberService {
             clothesByTempRepository.save(clothesByTemp);
         }
     }
+
+    @Override
+    public void deleteMemberClothes(Long id) {
+        ClothesByTemp clothesByTemp = clothesByTempRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_CLOTHES));
+
+        clothesByTempRepository.delete(clothesByTemp);
+    }
 }

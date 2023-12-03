@@ -15,4 +15,5 @@ public interface MemberService {
     void updateMemberInfo(Long uuid, MemberUpdateRequestDto memberUpdateRequestDto);
     List<ClothesByTemp> getMemberClothes(HttpServletRequest request);
     void addMemberClothes(Long uuid, List<MemberClotheRequestDto> memberClotheRequestDtoList);
+    void deleteMemberClothes(Long id);
 }
