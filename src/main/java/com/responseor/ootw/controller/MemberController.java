@@ -70,9 +70,13 @@ public class MemberController {
         return ResponseEntity.ok(null);
     }
 
-    @GetMapping("/my-clothes/{id}/delete")
-    public ResponseEntity<?> deleteMemberClothes(@PathVariable("id") int id) {
-        memberService.deleteMemberClothes(id);
+    @DeleteMapping("/my-clothes/{id}")
+    public ResponseEntity<?> deleteMemberClothes(@PathVariable("id") int id
+            , HttpServletRequest request) {
+        String token = jwtTokenProvider.resolveToken(request);
+        Long uuid = Long.valueOf(jwtTokenProvider.getUserPk(token));
+
+        memberService.deleteMemberClothes(id, uuid);
 
         return ResponseEntity.ok(null);
     }

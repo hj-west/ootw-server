@@ -103,8 +103,12 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public void deleteMemberClothes(int id) {
+    public void deleteMemberClothes(int id, Long uuid) {
         ClothesByTemp clothesByTemp = clothesByTempRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_CLOTHES));
+
+        if (!clothesByTemp.getUuid().equals(uuid)) {
+            throw new CustomException(ErrorCode.NOT_FOUND_CLOTHES);
+        }
 
         clothesByTempRepository.delete(clothesByTemp);
     }

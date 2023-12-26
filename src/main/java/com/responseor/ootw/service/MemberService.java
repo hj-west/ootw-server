@@ -18,5 +18,5 @@ public interface MemberService {
 
     List<ClothesByTemp> getMemberClothes(HttpServletRequest request);
     void addMemberClothes(Long uuid, List<MemberClotheRequestDto> memberClotheRequestDtoList);
-    void deleteMemberClothes(int id);
+    void deleteMemberClothes(int id, Long uuid);
 }
