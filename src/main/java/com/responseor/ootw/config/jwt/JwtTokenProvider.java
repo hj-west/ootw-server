@@ -59,6 +59,13 @@ public class JwtTokenProvider {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
+    // 토큰에서 회원 정보 추출(현재 로그인한 회원 정보 추출용)
+    public Long getUserUuidLoginUser(HttpServletRequest request) {
+        String token = this.resolveToken(request);
+
+        return Long.valueOf(Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject());
+    }
+
     // 토큰의 유효성 + 만료일자 확인
     public boolean validateToken(String jwtToken) {
         try {

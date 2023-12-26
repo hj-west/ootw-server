@@ -30,14 +30,15 @@ public class MemberController {
 
     @GetMapping("/my-info")
     public ResponseEntity<Member> memberInfo(HttpServletRequest request) {
-        return ResponseEntity.ok().body(memberService.getMemberInfo(request));
+        Long uuid = jwtTokenProvider.getUserUuidLoginUser(request);
+
+        return ResponseEntity.ok().body(memberService.getMemberInfo(uuid));
     }
 
     @PostMapping("/my-info")
     public ResponseEntity<?> memberInfoUpdate(HttpServletRequest request
     , @RequestBody MemberUpdateRequestDto memberUpdateRequestDto) {
-        String token = jwtTokenProvider.resolveToken(request);
-        Long uuid = Long.valueOf(jwtTokenProvider.getUserPk(token));
+        Long uuid = jwtTokenProvider.getUserUuidLoginUser(request);
 
         memberService.updateMemberInfo(uuid, memberUpdateRequestDto);
         return ResponseEntity.ok().body(null);
@@ -46,8 +47,7 @@ public class MemberController {
     @PostMapping("/my-info/password-update")
     public ResponseEntity<?> updateMemberPassword(HttpServletRequest request
     , @RequestBody MemberPasswordUpdateRequestDto memberPasswordUpdateRequestDto) {
-        String token = jwtTokenProvider.resolveToken(request);
-        Long uuid = Long.valueOf(jwtTokenProvider.getUserPk(token));
+        Long uuid = jwtTokenProvider.getUserUuidLoginUser(request);
 
         memberService.updateMemberPassword(uuid, memberPasswordUpdateRequestDto);
 
@@ -56,14 +56,15 @@ public class MemberController {
 
     @GetMapping("/my-clothes")
     public ResponseEntity<List<ClothesByTemp>> memberClothes(HttpServletRequest request) {
-        return ResponseEntity.ok().body(memberService.getMemberClothes(request));
+        Long uuid = jwtTokenProvider.getUserUuidLoginUser(request);
+
+        return ResponseEntity.ok().body(memberService.getMemberClothes(uuid));
     }
 
     @PostMapping("/my-clothes")
     public ResponseEntity<?> addMemberClothes(HttpServletRequest request
             , @RequestBody List<MemberClotheRequestDto> memberClotheRequestDtoList) {
-        String token = jwtTokenProvider.resolveToken(request);
-        Long uuid = Long.valueOf(jwtTokenProvider.getUserPk(token));
+        Long uuid = jwtTokenProvider.getUserUuidLoginUser(request);
 
         memberService.addMemberClothes(uuid, memberClotheRequestDtoList);
 
@@ -73,8 +74,7 @@ public class MemberController {
     @DeleteMapping("/my-clothes/{id}")
     public ResponseEntity<?> deleteMemberClothes(@PathVariable("id") int id
             , HttpServletRequest request) {
-        String token = jwtTokenProvider.resolveToken(request);
-        Long uuid = Long.valueOf(jwtTokenProvider.getUserPk(token));
+        Long uuid = jwtTokenProvider.getUserUuidLoginUser(request);
 
         memberService.deleteMemberClothes(id, uuid);
 
