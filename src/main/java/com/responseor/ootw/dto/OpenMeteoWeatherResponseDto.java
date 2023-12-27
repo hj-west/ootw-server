@@ -1,15 +1,13 @@
 package com.responseor.ootw.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class OpenMeteoWeatherResponseDto {
     private Current current;
     private Daily daily;
