@@ -18,25 +18,25 @@ public class WeatherResponseDto {
     @ApiModelProperty(example = "현재 체감 온도. 단위 : 섭씨")
     private float feelsTemp;
 
-    @ApiModelProperty(example = "현재 최저 온도(대규모 대도시 및 도시 지역 내)")
+    @ApiModelProperty(example = "최저 온도. 단위 : 섭씨")
     private float minTemp;
 
-    @ApiModelProperty(example = "현재 최대 온도.(대규모 대도시 및 도시 지역 내)")
+    @ApiModelProperty(example = "최대 온도. 단위 : 섭씨")
     private float maxTemp;
 
-    @ApiModelProperty(example = "습도, %")
+    @ApiModelProperty(example = "습도, 단위 : %")
     private float humidity;
 
     @ApiModelProperty(example = "바람의 속도. 단위 : meter/sec,")
     private float windSpeed;
 
-    @ApiModelProperty(example = "흐림, %")
+    @ApiModelProperty(example = "흐림, 단위 : %")
     private int cloudsAll;
 
-    @ApiModelProperty(example = "일몰 시간, 유닉스, UTC")
+    @ApiModelProperty(example = "일몰 시간")
     private String sunset;
 
-    @ApiModelProperty(example = "일출 시간, 유닉스, UTC")
+    @ApiModelProperty(example = "일출 시간")
     private String sunrise;
 
 }
