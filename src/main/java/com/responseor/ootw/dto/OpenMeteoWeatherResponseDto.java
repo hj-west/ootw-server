@@ -5,11 +5,14 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
 public class OpenMeteoWeatherResponseDto {
     private Current current;
+    private Daily daily;
 
 
     @Data
@@ -24,12 +27,13 @@ public class OpenMeteoWeatherResponseDto {
 
     @Data
     public static class Daily {
-        private Float temperature_2m;
-        private Integer relative_humidity_2m;
-        private Float apparent_temperature;
-        private Integer weather_code;
-        private Integer cloud_cover;
-        private Float wind_speed_10m;
+        private List<Integer> weather_code;
+        private List<Float> temperature_2m_max;
+        private List<Float> temperature_2m_min;
+        private List<Float> apparent_temperature_max;
+        private List<Float> apparent_temperature_min;
+        private List<String> sunrise;
+        private List<String> sunset;
     }
 
 }
