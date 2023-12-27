@@ -1,13 +1,14 @@
 package com.responseor.ootw.service;
 
-import com.responseor.ootw.dto.CustomUserDetails;
-import com.responseor.ootw.dto.WeatherApiResponseDto;
-import com.responseor.ootw.dto.WeatherResponseDto;
-import com.responseor.ootw.entity.ClothesByTemp;
 import com.responseor.ootw.config.exception.CustomException;
 import com.responseor.ootw.config.exception.ErrorCode;
+import com.responseor.ootw.dto.CustomUserDetails;
+import com.responseor.ootw.dto.OpenMeteoWeatherResponseDto;
+import com.responseor.ootw.dto.WeatherResponseDto;
+import com.responseor.ootw.entity.ClothesByTemp;
 import com.responseor.ootw.repository.ClothesByTempRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -21,13 +22,11 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class WeatherServiceImpl implements WeatherService {
 
-    @Value("${openweather.host}")
+    @Value("${openmeteo.host}")
     private String weatherHost;
-
-    @Value("${openweather.apikey}")
-    private String apiKey;
 
     private final ClothesByTempRepository clothesByTempRepository;
 
@@ -35,33 +34,40 @@ public class WeatherServiceImpl implements WeatherService {
     public WeatherResponseDto getWeather(String lat, String lon) {
         StringBuilder urlBuilder = new StringBuilder(weatherHost);
 
+        OpenMeteoWeatherResponseDto weatherResponseDto;
         try {
-            urlBuilder.append("?" + URLEncoder.encode("lat", "UTF-8") + "=" + lat);
-            urlBuilder.append("&" + URLEncoder.encode("lon", "UTF-8") + "=" + lon);
-            urlBuilder.append("&" + URLEncoder.encode("appid", "UTF-8") + "=" + apiKey);
-            urlBuilder.append("&" + URLEncoder.encode("lang", "UTF-8") + "=kr");
-            urlBuilder.append("&" + URLEncoder.encode("units", "UTF-8") + "=metric");
+            urlBuilder.append("?" + URLEncoder.encode("latitude", "UTF-8") + "=" + lat);
+            urlBuilder.append("&" + URLEncoder.encode("longitude", "UTF-8") + "=" + lon);
+            urlBuilder.append("&" + URLEncoder.encode("current", "UTF-8") + "=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,cloud_cover,wind_speed_10m");
+            urlBuilder.append("&" + URLEncoder.encode("wind_speed_unit", "UTF-8") + "=ms");
+            urlBuilder.append("&" + URLEncoder.encode("daily", "UTF-8") + "=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset");
+            urlBuilder.append("&" + URLEncoder.encode("timezone", "UTF-8") + "=Asia/Seoul");
+            urlBuilder.append("&" + URLEncoder.encode("forecast_days", "UTF-8") + "=1");
 
             RestTemplate restTemplate = new RestTemplate();
 
-            WeatherApiResponseDto apiResponse =restTemplate.getForObject(urlBuilder.toString(), WeatherApiResponseDto.class);
+            weatherResponseDto = restTemplate.getForObject(urlBuilder.toString(), OpenMeteoWeatherResponseDto.class);
+
+            if (weatherResponseDto == null) {
+                log.error("WEATHER_API_ERROR : weatherResponseDto == null");
+                throw new CustomException(ErrorCode.WEATHER_API_ERROR);
+            }
 
             return WeatherResponseDto.builder()
-                    .id(Objects.requireNonNull(apiResponse).getWeather().get(0).getId())
-                    .main(Objects.requireNonNull(apiResponse).getWeather().get(0).getMain())
-                    .icon(Objects.requireNonNull(apiResponse).getWeather().get(0).getIcon())
-                    .temp(apiResponse.getMain().getTemp())
-                    .feelsTemp(apiResponse.getMain().getFeels_like())
-                    .minTemp(apiResponse.getMain().getTemp_min())
-                    .maxTemp(apiResponse.getMain().getTemp_max())
-                    .humidity(apiResponse.getMain().getHumidity())
-                    .windSpeed(apiResponse.getWind().getSpeed())
-                    .cloudsAll(apiResponse.getClouds().getAll())
-                    .sunrise(apiResponse.getSys().getSunrise())
-                    .sunset(apiResponse.getSys().getSunset())
+                    .id(Objects.requireNonNull(weatherResponseDto).getCurrent().getWeather_code())
+                    .temp(weatherResponseDto.getCurrent().getTemperature_2m())
+                    .feelsTemp(weatherResponseDto.getCurrent().getApparent_temperature())
+                    .minTemp(weatherResponseDto.getDaily().getTemperature_2m_min().get(0))
+                    .maxTemp(weatherResponseDto.getDaily().getTemperature_2m_max().get(0))
+                    .humidity(weatherResponseDto.getCurrent().getRelative_humidity_2m())
+                    .windSpeed(weatherResponseDto.getCurrent().getWind_speed_10m())
+                    .cloudsAll(weatherResponseDto.getCurrent().getCloud_cover())
+                    .sunrise(weatherResponseDto.getDaily().getSunrise().toString())
+                    .sunset(weatherResponseDto.getDaily().getSunset().toString())
                     .build();
 
         } catch (Exception e) {
+            log.error("WEATHER_API_ERROR : {}",e.getMessage(), e);
             throw new CustomException(ErrorCode.WEATHER_API_ERROR);
         }
     }

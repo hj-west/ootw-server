@@ -38,6 +38,9 @@ openweather:
   host: https://api.openweathermap.org/data/2.5/weather
   apikey: 3ab9e45e7483aff5ae45a7f6c3f22a92
 
+openmeteo:
+  host: https://api.open-meteo.com/v1/forecast
+
 
 ---
 server:
@@ -74,3 +77,6 @@ jwt:
 openweather:
   host: https://api.openweathermap.org/data/2.5/weather
   apikey: 3ab9e45e7483aff5ae45a7f6c3f22a92
+
+openmeteo:
+  host: https://api.open-meteo.com/v1/forecast
