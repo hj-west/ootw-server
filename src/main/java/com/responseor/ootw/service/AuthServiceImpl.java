@@ -1,20 +1,30 @@
 package com.responseor.ootw.service;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.responseor.ootw.config.jwt.JwtTokenProvider;
+import com.responseor.ootw.dto.auth.KakaoTokenResponseDto;
 import com.responseor.ootw.entity.Member;
 import com.responseor.ootw.config.exception.CustomException;
 import com.responseor.ootw.config.exception.ErrorCode;
 import com.responseor.ootw.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 public class AuthServiceImpl implements AuthService{
 
     private final BCryptPasswordEncoder passwordEncoder;
@@ -36,4 +46,57 @@ public class AuthServiceImpl implements AuthService{
 
     }
 
+    public KakaoTokenResponseDto getAccessToken(Integer code) {
+        String accessToken = "";
+        String refreshToken = "";
+        String reqUrl = "https://kauth.kakao.com/oauth/token";
+
+        try {
+            URL url = new URL(reqUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("grant_type=authorization_code");
+            sb.append("&client_id=" + "b0223000b1e61cbbdf63909b360af171");
+            sb.append("&code=" + code);
+
+            BufferedWriter bw = null;
+            try {
+                bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+                bw.write(sb.toString());
+            } catch (IOException e) {
+                log.error("Kakao Token Api Error : {}", e.getMessage(), e);
+                throw new RuntimeException(e);
+            } finally {
+                if (bw != null) {
+                    bw.flush();
+                }
+            }
+            BufferedReader br = null;
+            String line = "";
+            String result = "";
+            try {
+                br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                while ((line = br.readLine()) != null) {
+                    result += line;
+                }
+
+                ObjectMapper objectMapper = new ObjectMapper();
+                KakaoTokenResponseDto responseDto = objectMapper.readValue(result, KakaoTokenResponseDto.class);
+                accessToken = responseDto.getAccess_token();
+                return responseDto;
+            } catch (IOException e) {
+                log.error("Kakao Token Api Error : {}", e.getMessage(), e);
+                throw new RuntimeException(e);
+            } finally {
+                if (br != null)
+                    br.close();
+            }
+        } catch (IOException e) {
+            log.error("Kakao Token Api Error : {}", e.getMessage(), e);
+            throw new RuntimeException(e);
+        }
+    }
 }
