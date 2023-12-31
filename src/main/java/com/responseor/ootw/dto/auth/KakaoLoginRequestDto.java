@@ -6,5 +6,5 @@ import lombok.Setter;
 @Setter
 @Getter
 public class KakaoLoginRequestDto {
-    private Integer code;
+    private String code;
 }

@@ -4,5 +4,5 @@ import com.responseor.ootw.dto.auth.KakaoTokenResponseDto;
 
 public interface AuthService {
     String login(String email, String password);
-    KakaoTokenResponseDto getAccessToken(Integer code);
+    KakaoTokenResponseDto getAccessToken(String code);
 }

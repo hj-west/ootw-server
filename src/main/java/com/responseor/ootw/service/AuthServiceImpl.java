@@ -46,7 +46,7 @@ public class AuthServiceImpl implements AuthService{
 
     }
 
-    public KakaoTokenResponseDto getAccessToken(Integer code) {
+    public KakaoTokenResponseDto getAccessToken(String code) {
         String accessToken = "";
         String refreshToken = "";
         String reqUrl = "https://kauth.kakao.com/oauth/token";
