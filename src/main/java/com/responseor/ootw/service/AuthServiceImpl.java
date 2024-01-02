@@ -1,12 +1,11 @@
 package com.responseor.ootw.service;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.responseor.ootw.config.exception.CustomException;
+import com.responseor.ootw.config.exception.ErrorCode;
 import com.responseor.ootw.config.jwt.JwtTokenProvider;
 import com.responseor.ootw.dto.auth.KakaoTokenResponseDto;
 import com.responseor.ootw.entity.Member;
-import com.responseor.ootw.config.exception.CustomException;
-import com.responseor.ootw.config.exception.ErrorCode;
 import com.responseor.ootw.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.List;
 
@@ -59,7 +56,7 @@ public class AuthServiceImpl implements AuthService{
 
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
-            sb.append("&client_id=" + "b0223000b1e61cbbdf63909b360af171");
+            sb.append("&client_id=" + "9f69a060918ad406bdd0bc6cbd272655");
             sb.append("&code=" + code);
 
             BufferedWriter bw = null;
