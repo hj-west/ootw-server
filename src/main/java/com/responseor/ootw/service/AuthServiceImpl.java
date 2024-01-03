@@ -81,6 +81,9 @@ public class AuthServiceImpl implements AuthService{
                 }
 
                 ObjectMapper objectMapper = new ObjectMapper();
+
+                log.info(result);
+
                 KakaoTokenResponseDto responseDto = objectMapper.readValue(result, KakaoTokenResponseDto.class);
                 accessToken = responseDto.getAccess_token();
                 return responseDto;
